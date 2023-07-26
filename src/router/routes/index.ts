@@ -1,20 +1,22 @@
 import { RouteRecordRaw, RouterView } from 'vue-router'
 import NotFound from '@/views/common/NotFound.vue'
+import { pcRoutes } from './pc'
+import { mobileRoutes } from './mobile'
 
 export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    component: () => import('@/views/index.vue')
+    redirect: '/pc'
   },
   {
-    path: '/app_version',
+    path: '/pc',
     component: RouterView,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/public/app_version/index.vue')
-      }
-    ]
+    children: pcRoutes
+  },
+  {
+    path: '/mobile',
+    component: RouterView,
+    children: mobileRoutes
   },
   {
     path: '/:pathMatch(.*)*',

@@ -1,11 +1,10 @@
 <template>
   <div>
-    <var-app-bar title="App版本管理">
+    <var-app-bar title="App版本管理" color="white" text-color="black" :elevation="1">
       <template #left>
         <var-button
           class="mr-2"
           color="transparent"
-          text-color="#fff"
           round
           text
           @click="$router.back()">
