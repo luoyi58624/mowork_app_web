@@ -1,0 +1,41 @@
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+env:
+  NAME: mowork_app_web
+  DOCKER_USERNAME: luoyi58624
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
+        with:
+          strip_v: true
+      - uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Docker Build
+        run: docker build -t $DOCKER_USERNAME/$NAME:${{ steps.tag.outputs.tag }} .
+      - name: Docker Push
+        run: docker push $DOCKER_USERNAME/$NAME:${{ steps.tag.outputs.tag }}
+      - name: Server Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: 22
+          script: |
+            docker stop $(docker ps -f name=${{ env.NAME }} -q)
+            docker rm $(docker ps -af name=${{ env.NAME }} -q)
+            docker rmi -f $(docker images ${{ env.DOCKER_USERNAME }}/${{ env.NAME }} -q)
+            docker pull ${{ env.DOCKER_USERNAME }}/${{ env.NAME }}:${{ steps.tag.outputs.tag }}
+            docker run --name=${{ env.NAME }} -d -p 10009:80 ${{ env.DOCKER_USERNAME }}/${{ env.NAME }}:${{ steps.tag.outputs.tag }}
