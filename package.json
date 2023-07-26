@@ -1,0 +1,41 @@
+{
+  "name": "mowork_app_web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "update:dep": "ncu -u && pnpm update",
+    "prettier": "prettier --config prettier.config.cjs --write ./src/**/*.{ts,tsx,vue}"
+  },
+  "dependencies": {
+    "@unocss/reset": "^0.53.6",
+    "@varlet/touch-emulator": "^2.13.4",
+    "@varlet/ui": "^2.13.4",
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.9",
+    "lodash-es": "^4.17.21",
+    "nanoid": "^4.0.2",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.1.4",
+    "vue": "^3.3.4",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.196",
+    "@types/node": "^20.4.5",
+    "@types/nprogress": "^0.2.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "npm-check-updates": "^16.10.17",
+    "prettier": "^3.0.0",
+    "sass": "^1.64.1",
+    "typescript": "^5.1.6",
+    "unocss": "^0.53.6",
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.1",
+    "vite": "^4.4.7",
+    "vue-tsc": "^1.8.6"
+  }
+}

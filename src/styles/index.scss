@@ -1,0 +1,13 @@
+@import 'reset';
+@import 'varlet_ui';
+
+html {
+  @apply bg-light-500;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+}
