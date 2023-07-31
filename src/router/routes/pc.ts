@@ -2,11 +2,12 @@ import { RouteRecordRaw } from 'vue-router'
 
 export const pcRoutes: Array<RouteRecordRaw> = [
   {
-    path: '',
-    component: () => import('@/views/pc/index.vue')
+    path: 'app_version',
+    name: 'AppVersion',
+    meta:{
+      title: 'App版本管理',
+      icon: 'mingcute:version-fill'
+    },
+    component: () => import('@/views/pc/app_version/index.vue')
   },
-  {
-    path: 'demo',
-    component: () => import('@/views/pc/demo.vue')
-  }
 ]
