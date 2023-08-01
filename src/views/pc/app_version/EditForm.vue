@@ -1,5 +1,5 @@
 <template>
-	<el-dialog :model-value="modelValue" title="编辑App版本" width="600px" @close="hideDialog">
+	<el-dialog :model-value="modelValue" title="编辑App版本" width="600px" @open="openDialog" @close="hideDialog">
 		<el-form :model="formData" label-width="120">
 			<el-form-item label="版本名字：">
 				<el-input v-model="formData.versionName" />
@@ -8,20 +8,29 @@
 				<el-input-number v-model="formData.versionCode" :min="1" />
 			</el-form-item>
 			<el-form-item label="安装包：">
-				<el-upload ref="uploadRef" accept=".apk" :auto-upload="false" :limit="1" @change="fileChange" :on-exceed="onExceed">
+				<el-upload
+					ref="uploadRef"
+					accept=".apk"
+					action="http://upload-z2.qiniup.com"
+					:data="{ token: uploadToken, key: file?.name }"
+					:auto-upload="false"
+					:limit="1"
+					:on-exceed="onExceed"
+					@change="fileChange"
+					@success="submitForm">
 					<template #trigger>
 						<el-button type="primary">选择安装包</el-button>
 					</template>
 				</el-upload>
 			</el-form-item>
 			<el-form-item label="更新描述：">
-				<el-input v-model="formData.updateDesc" type="textarea" />
+				<el-input v-model="formData.updateDesc" type="textarea" :rows="5" />
 			</el-form-item>
 		</el-form>
 		<template #footer>
 			<span>
 				<el-button @click="hideDialog">取消</el-button>
-				<el-button type="primary" :loading="uploadLoading" @click="onSubmitAdd">确认</el-button>
+				<el-button type="primary" :loading="uploadLoading" @click="uploadFile">确认</el-button>
 			</span>
 		</template>
 	</el-dialog>
@@ -33,6 +42,7 @@ import type { UploadInstance } from 'element-plus'
 
 interface Props {
 	modelValue: boolean
+	selectedData: any
 	getListData: () => void
 }
 const props = defineProps<Props>()
@@ -40,19 +50,31 @@ const emits = defineEmits(['update:modelValue'])
 
 const uploadRef = ref<UploadInstance>()
 const uploadLoading = ref(false)
+const uploadToken = ref('')
+const file = shallowRef<File>()
 const formData = reactive({
+	_id: null,
+	appName: null,
+	fileSize: null,
 	versionName: '0.0.1',
 	versionCode: 1,
-	updateDesc: '',
-	file: null
+	updateDesc: ''
 })
+
+function openDialog() {
+	Object.keys(toRaw(formData)).forEach(key => {
+		if (!isEmpty(props.selectedData[key])) {
+			formData[key] = props.selectedData[key]
+		}
+	})
+}
 
 function hideDialog() {
 	emits('update:modelValue', false)
 }
 
 function fileChange(e) {
-	formData.file = e.raw
+	file.value = e.raw
 }
 
 function onExceed(e) {
@@ -60,27 +82,39 @@ function onExceed(e) {
 	unref(uploadRef).handleStart(e[0])
 }
 
-function onSubmitAdd() {
+async function uploadFile() {
 	uploadLoading.value = true
-	const data = new FormData()
-	data.set('appName', formData.file.name)
-	data.set('versionName', formData.versionName)
-	data.set('versionCode', formData.versionCode.toString())
-	formData.updateDesc.split('\n').forEach((item, index) => {
-		data.set(`updateDesc[${index}]`, item)
-	})
-	data.set('file', formData.file)
-	http
-		.post('/app-version', data)
-		.then(res => {
-			console.log(res)
-			showDialog.value = false
-			props.getListData()
-			showMessage('上传成功')
+	try {
+		if (file.value == null) {
+			submitForm()
+		} else {
+			const tokenResData = await http.get('getUploadToken', { params: { fileName: file.value.name } })
+			uploadToken.value = tokenResData.data
+			unref(uploadRef).submit()
+		}
+	} catch (e) {
+		console.log(e)
+		uploadLoading.value = false
+	}
+}
+
+async function submitForm() {
+	try {
+		await http.put('/app-version', {
+			...formData,
+			appName: file.value?.name ?? formData.appName,
+			fileSize: file.value?.size ?? formData.fileSize,
+			updateDesc: formData.updateDesc.split('\n')
 		})
-		.finally(() => {
-			uploadLoading.value = false
-		})
+		props.getListData()
+		showMessage('更新成功')
+		uploadLoading.value = false
+		hideDialog()
+	} catch (e) {
+		console.log(e)
+		showMessage('更新失败', 'error')
+		uploadLoading.value = false
+	}
 }
 </script>
 

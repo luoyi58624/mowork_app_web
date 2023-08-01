@@ -7,10 +7,11 @@ import { ElMessageBox } from 'element-plus'
  * @returns
  */
 export const useListData = (url: string) => {
-	const listData = ref([])
-	const selectedData = ref([])
-	const loadLoading = ref(false)
-	const deleteLoading = ref(false)
+	const listData = ref([]) // 列表数据
+	const selectedListData = ref([]) // 选中的列表数据
+	const selectedData = ref(null) // 选中的单条数据
+	const loadLoading = ref(false) // 列表加载loading
+	const deleteLoading = ref(false) // 删除数据loading
 
 	function getListData() {
 		loadLoading.value = true
@@ -55,6 +56,7 @@ export const useListData = (url: string) => {
 
 	return {
 		listData,
+		selectedListData,
 		selectedData,
 		loadLoading,
 		deleteLoading,
