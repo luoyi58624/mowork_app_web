@@ -16,6 +16,7 @@
 					:auto-upload="false"
 					:limit="1"
 					:on-exceed="onExceed"
+					:on-remove="onRemove"
 					@change="fileChange"
 					@success="submitForm">
 					<template #trigger>
@@ -75,6 +76,10 @@ function hideDialog() {
 
 function fileChange(e) {
 	file.value = e.raw
+}
+
+function onRemove() {
+	file.value = null
 }
 
 function onExceed(e) {

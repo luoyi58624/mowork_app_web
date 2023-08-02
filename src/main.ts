@@ -17,7 +17,7 @@ app.use(createPinia())
 
 app.use(router)
 app.use(AdminLayout, {
-	title: 'MoWork后台管理系统',
+	title: 'App版本上传测试系统',
 	logo: '/img/logo.png',
 	navbarButtons: []
 })
