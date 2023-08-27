@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const http = axios.create({
 	baseURL:
-		import.meta.env.MODE == 'development' ? 'http://localhost:3001' : 'http://115.159.28.38:10008',
+		import.meta.env.MODE == 'development' ? 'http://localhost:3001' : 'http://115.159.28.38:11000',
 		// 'http://115.159.28.38:10008',
 	timeout: 15000
 })
