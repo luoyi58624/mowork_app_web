@@ -4,9 +4,6 @@
 			<el-form-item label="版本名字：">
 				<el-input v-model="formData.versionName" />
 			</el-form-item>
-			<el-form-item label="版本号：">
-				<el-input-number v-model="formData.versionCode" :min="1" />
-			</el-form-item>
 			<el-form-item label="安装包：" required :show-message="showErrrMessage" error="请选择app安装包">
 				<el-upload
 					ref="uploadRef"
@@ -16,6 +13,7 @@
 					:auto-upload="false"
 					:limit="1"
 					:on-exceed="onExceed"
+					:on-remove="onRemove"
 					@change="fileChange"
 					@success="submitForm">
 					<template #trigger>
@@ -55,7 +53,6 @@ const uploadToken = ref('')
 const file = shallowRef<File>()
 const formData = reactive({
 	versionName: '0.0.1',
-	versionCode: 1,
 	updateDesc: ''
 })
 
@@ -65,9 +62,11 @@ function hideDialog() {
 
 function fileChange(e) {
 	file.value = e.raw
-	if (file.value != null) {
-		showErrrMessage.value = false
-	}
+	showErrrMessage.value = false
+}
+
+function onRemove() {
+	file.value = null
 }
 
 function onExceed(e) {
