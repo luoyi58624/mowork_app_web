@@ -29,8 +29,8 @@ jobs:
             pnpm run build:dev
             pnpm run build:prod
             rm -rf /www/server/nginx/html/mowork_app_web/dev
-            rsync -a dist/dev /www/server/nginx/html/mowork_app_web/dev
+            rsync -a dist/dev /www/server/nginx/html/mowork_app_web
             rm -rf /www/server/nginx/html/mowork_app_web/prod
-            rsync -a dist/prod /www/server/nginx/html/mowork_app_web/prod
+            rsync -a dist/prod /www/server/nginx/html/mowork_app_web
 
 
