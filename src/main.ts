@@ -17,7 +17,7 @@ app.use(createPinia())
 
 app.use(router)
 app.use(AdminLayout, {
-	title: 'App版本上传测试系统',
+	title: import.meta.env.VITE_TITLE,
 	logo: '/img/logo.png',
 	navbarButtons: []
 })
