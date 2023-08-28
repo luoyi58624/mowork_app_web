@@ -1,0 +1,36 @@
+on:
+  push:
+    branches:
+      - master
+
+env:
+  NAME: mowork_app_web
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: 22
+          script: |
+            cd /www/wwwroot/vue/mowork_app_web
+            git fetch --all
+            git reset --hard origin/master
+            git pull
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            npm install -g
+            pnpm i
+            pnpm run build:dev
+            pnpm run build:prod
+            rm -rf /www/server/nginx/html/mowork_app_web/dev
+            rsync -a dist/dev /www/server/nginx/html/mowork_app_web/dev
+            rm -rf /www/server/nginx/html/mowork_app_web/prod
+            rsync -a dist/prod /www/server/nginx/html/mowork_app_web/prod
+
+
