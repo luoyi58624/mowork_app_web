@@ -65,7 +65,11 @@ const formData = reactive({
 function openDialog() {
 	Object.keys(toRaw(formData)).forEach(key => {
 		if (!isEmpty(props.selectedData[key])) {
-			formData[key] = props.selectedData[key]
+			if (key == 'updateDesc') {
+				formData.updateDesc = (props.selectedData[key] as []).join('\n')
+			} else {
+				formData[key] = props.selectedData[key]
+			}
 		}
 	})
 }

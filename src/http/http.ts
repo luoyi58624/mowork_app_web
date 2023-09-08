@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const http = axios.create({
-	baseURL: import.meta.env.MODE == 'development' ? 'http://localhost:3001' : import.meta.env.VITE_SERVER_URL,
+	baseURL: import.meta.env.MODE == 'development' ? 'http://localhost:11000' : import.meta.env.VITE_SERVER_URL,
 	timeout: 15000
 })
 
