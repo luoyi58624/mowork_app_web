@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build:dev": "vite build --mode dev",
-    "build:prod": "vite build --mode prod",
+    "build": "vite build",
     "preview": "vite preview",
     "update:dep": "ncu -u && pnpm update",
     "prettier": "prettier --config prettier.config.cjs --write ./src/**/*.{ts,tsx,vue}"
