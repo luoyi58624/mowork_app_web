@@ -37,8 +37,6 @@ function openEditDialog(data) {
 provide('selectedData', selectedData)
 onMounted(() => {
 	getListData()
-	console.log(import.meta.env.VITE_BUILD_DIR);
-	
 })
 </script>
 
