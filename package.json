@@ -12,8 +12,6 @@
   },
   "dependencies": {
     "@unocss/reset": "^0.58.3",
-    "@varlet/touch-emulator": "^2.21.0",
-    "@varlet/ui": "^2.21.0",
     "axios": "^1.6.5",
     "dayjs": "^1.11.10",
     "element-admin-layout": "^0.0.19",

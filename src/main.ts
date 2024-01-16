@@ -3,7 +3,6 @@ import router from './router'
 
 import 'uno.css'
 import '@unocss/reset/tailwind-compat.css'
-import '@varlet/touch-emulator'
 
 import App from './App.vue'
 import './styles/index.scss'
@@ -19,6 +18,6 @@ app.use(createPinia())
 app.use(router)
 app.use(AdminLayout, {
 	title: 'Mowork',
-	logo: '/img/logo.png'
+	logo: 'logo.png'
 })
 app.mount('#app')

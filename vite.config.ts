@@ -4,7 +4,7 @@ import * as path from 'path'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { VarletUIResolver, ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
 	base: '/mowork_app_web/',
@@ -17,13 +17,13 @@ export default defineConfig({
 		vue(),
 		UnoCSS(),
 		AutoImport({
-			resolvers: [VarletUIResolver({ autoImport: true }), ElementPlusResolver()],
+			resolvers: [ElementPlusResolver()],
 			imports: ['vue', 'pinia'],
 			dirs: ['./src/store', './src/http', './src/utils', './src/config', './src/composables'],
 			dts: true
 		}),
 		Components({
-			resolvers: [VarletUIResolver(), ElementPlusResolver()],
+			resolvers: [ElementPlusResolver()],
 			extensions: ['vue', 'tsx'],
 			deep: true,
 			directoryAsNamespace: false,
@@ -42,8 +42,7 @@ export default defineConfig({
 					'vendors/vue': ['vue', 'vue-router', 'pinia'],
 					'vendors/common': ['lodash-es', 'dayjs', 'axios', 'nprogress'],
 					'vendors/element-ui': ['element-plus'],
-					'vendors/element-admin-layout': ['element-admin-layout'],
-					'vendors/varlet-ui': ['@varlet/ui', '@varlet/touch-emulator']
+					'vendors/element-admin-layout': ['element-admin-layout']
 				}
 			}
 		}
