@@ -9,6 +9,7 @@ import { VarletUIResolver, ElementPlusResolver } from 'unplugin-vue-components/r
 export default defineConfig(({ command, mode }) => {
 	const env = loadEnv(mode, process.cwd(), '')
 	return {
+		base: '/mowork_app_web/',
 		resolve: {
 			alias: {
 				'@': path.resolve(__dirname, 'src')
