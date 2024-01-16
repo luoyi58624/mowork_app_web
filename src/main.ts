@@ -1,4 +1,4 @@
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 import router from './router'
 
 import 'uno.css'
@@ -18,7 +18,7 @@ app.use(createPinia())
 
 app.use(router)
 app.use(AdminLayout, {
-  title: import.meta.env.VITE_TITLE,
-  logo: '/img/logo.png',
+	title: 'Mowork',
+	logo: '/img/logo.png'
 })
 app.mount('#app')
