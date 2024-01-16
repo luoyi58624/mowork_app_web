@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import router from './router'
 
 import 'uno.css'
@@ -12,13 +12,13 @@ import AdminLayout from 'element-admin-layout'
 import 'element-admin-layout/dist/style.css'
 
 import 'element-plus/es/components/message-box/style/css'
+
 const app = createApp(App)
 app.use(createPinia())
 
 app.use(router)
 app.use(AdminLayout, {
-	title: import.meta.env.VITE_TITLE,
-	logo: '/img/logo.png',
-	navbarButtons: []
+  title: import.meta.env.VITE_TITLE,
+  logo: '/img/logo.png',
 })
 app.mount('#app')

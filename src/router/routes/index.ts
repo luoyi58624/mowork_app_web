@@ -1,20 +1,22 @@
-import { RouteRecordRaw, RouterView } from 'vue-router'
+import { RouteRecordRaw } from 'vue-router'
 import NotFound from '@/views/common/NotFound.vue'
-import { pcRoutes } from './pc'
-import { h5Routes } from './h5'
 import { createLayoutRouter } from 'element-admin-layout'
 
 export const routes: Array<RouteRecordRaw> = [
-	{
-		path: '/',
-		redirect: '/pc/app_version'
-	},
-	createLayoutRouter(pcRoutes, '/pc', '/pc/app_version'),
-	{
-		path: '/h5',
-		component: RouterView,
-		children: h5Routes
-	},
+	createLayoutRouter(
+		[
+			{
+				path: '',
+				name: 'AppVersion',
+				meta: {
+					title: 'App版本管理',
+					icon: 'mingcute:version-fill'
+				},
+				component: () => import('@/views/app_version/index.vue')
+			}
+		],
+		'/'
+	),
 	{
 		path: '/:pathMatch(.*)*',
 		redirect: '/404'
