@@ -11,8 +11,7 @@
 				<el-upload
 					ref="uploadRef"
 					accept=".apk"
-					action="http://upload-z2.qiniup.com"
-					:data="{ token: uploadToken, key: file?.name }"
+					:action="serverUrl + '/app_version/upload'"
 					:auto-upload="false"
 					:limit="1"
 					:on-exceed="onExceed"
@@ -46,12 +45,12 @@ interface Props {
 	selectedData: any
 	getListData: () => void
 }
+const serverUrl = import.meta.env.VITE_SERVER_URL
 const props = defineProps<Props>()
 const emits = defineEmits(['update:modelValue'])
 
 const uploadRef = ref<UploadInstance>()
 const uploadLoading = ref(false)
-const uploadToken = ref('')
 const file = shallowRef<File>()
 const formData = reactive({
 	_id: null,
@@ -95,10 +94,8 @@ async function uploadFile() {
 	uploadLoading.value = true
 	try {
 		if (file.value == null) {
-			submitForm()
+			submitForm(null)
 		} else {
-			const tokenResData = await http.get('getUploadToken', { params: { fileName: file.value.name } })
-			uploadToken.value = tokenResData.data
 			unref(uploadRef).submit()
 		}
 	} catch (e) {
@@ -107,13 +104,14 @@ async function uploadFile() {
 	}
 }
 
-async function submitForm() {
+async function submitForm(e) {
 	try {
-		await http.put('/app-version', {
+		await http.put('/app_version', {
 			...formData,
 			appName: file.value?.name ?? formData.appName,
 			fileSize: file.value?.size ?? formData.fileSize,
-			updateDesc: formData.updateDesc.split('\n')
+			updateDesc: formData.updateDesc.split('\n'),
+			downloadUrl: e?.data.filePath
 		})
 		props.getListData()
 		showMessage('更新成功')

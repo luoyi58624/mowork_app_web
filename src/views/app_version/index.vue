@@ -1,6 +1,7 @@
 <template>
 	<div class="p-2 flex flex-col">
 		<div class="mb-2 flex justify-end">
+			<el-button type="primary" @click="getNewVersion">获取最新版本</el-button>
 			<el-button type="primary" @click="showAddDialog = true">上传新版本</el-button>
 		</div>
 		<el-table class="w-full flex-1" :data="listData" :border="true" :show-overflow-tooltip="true">
@@ -25,7 +26,7 @@
 import AddForm from './AddForm.vue'
 import EditForm from './EditForm.vue'
 
-const { listData, selectedData, getListData, deleteListData } = useListData('/app-version')
+const { listData, selectedData, getListData, deleteListData } = useListData('/app_version')
 const showAddDialog = ref(false)
 const showEditDialog = ref(false)
 
@@ -34,6 +35,11 @@ function openEditDialog(data) {
 	showEditDialog.value = true
 }
 
+function getNewVersion() {
+	http.get('/app_version/new_version').then(res => {
+		console.log(res.data)
+	})
+}
 provide('selectedData', selectedData)
 onMounted(() => {
 	getListData()

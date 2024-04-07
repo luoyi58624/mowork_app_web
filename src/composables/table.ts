@@ -43,7 +43,7 @@ export const useListData = (url: string) => {
 				dataId = id
 			}
 			http
-				.delete(url + '/' + dataId)
+				.delete(url + '?_id=' + dataId)
 				.then(() => {
 					showMessage('删除成功')
 					getListData()

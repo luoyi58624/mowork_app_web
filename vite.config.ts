@@ -7,7 +7,6 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
-	base: '/mowork_app_web/',
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src')
