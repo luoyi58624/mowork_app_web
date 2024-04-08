@@ -23,6 +23,7 @@ jobs:
             git fetch --all
             git reset --hard origin/master
             git pull
+            bun -v
             bun i
             bun run build
             docker build -t ${{ env.NAME }} .
