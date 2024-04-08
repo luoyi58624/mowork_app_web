@@ -98,7 +98,7 @@ async function submitForm(e) {
 			appName: file.value.name,
 			fileSize: file.value.size,
 			updateDesc: formData.updateDesc.split('\n'),
-			downloadUrl: e?.data.filePath,
+			downloadUrl: e?.data.uploadPath,
 		})
 		props.getListData()
 		showMessage('上传成功')
