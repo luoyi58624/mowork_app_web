@@ -16,5 +16,8 @@ jobs:
           port: 22
           script: |
             cd /opt/server/mowork_app_web
+            git fetch --all
+            git reset --hard origin/master
+            git pull
             sh docker_shell.sh
 

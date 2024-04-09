@@ -1,9 +1,5 @@
 NAME="mowork_app_web"
 
-git fetch --all
-git reset --hard origin/master
-git pull
-
 CONTAINER_ID=$(docker ps -aqf name=${NAME})
 
 if [ -n "$CONTAINER_ID" ]; then
