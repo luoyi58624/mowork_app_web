@@ -8,7 +8,7 @@
 				<el-upload
 					ref="uploadRef"
 					accept=".apk"
-					:action="serverUrl + '/app_version/upload'"
+					:action="serverUrl + '/app-version/upload'"
 					:auto-upload="false"
 					:limit="1"
 					:on-exceed="onExceed"
@@ -93,7 +93,7 @@ async function submitForm(e) {
 	try {
 		console.log(e)
 
-		await http.post('/app_version', {
+		await http.post('/app-version', {
 			...formData,
 			appName: file.value.name,
 			fileSize: file.value.size,

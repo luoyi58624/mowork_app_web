@@ -18,8 +18,6 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           script: |
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
             cd /opt/server/${{ env.NAME }}
             git fetch --all
             git reset --hard origin/master

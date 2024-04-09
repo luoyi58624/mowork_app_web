@@ -11,7 +11,7 @@
 				<el-upload
 					ref="uploadRef"
 					accept=".apk"
-					:action="serverUrl + '/app_version/upload'"
+					:action="serverUrl + '/app-version/upload'"
 					:auto-upload="false"
 					:limit="1"
 					:on-exceed="onExceed"
@@ -106,12 +106,12 @@ async function uploadFile() {
 
 async function submitForm(e) {
 	try {
-		await http.put('/app_version', {
+		await http.put('/app-version', {
 			...formData,
 			appName: file.value?.name ?? formData.appName,
 			fileSize: file.value?.size ?? formData.fileSize,
 			updateDesc: formData.updateDesc.split('\n'),
-			downloadUrl: e?.data.filePath
+			downloadUrl: e?.data.uploadPath
 		})
 		props.getListData()
 		showMessage('更新成功')

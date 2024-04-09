@@ -1,4 +1,4 @@
-FROM node:18.15.0
+FROM node
 RUN mkdir -p /app
 WORKDIR /app
 COPY . /app 

@@ -26,7 +26,7 @@
 import AddForm from './AddForm.vue'
 import EditForm from './EditForm.vue'
 
-const { listData, selectedData, getListData, deleteListData } = useListData('/app_version')
+const { listData, selectedData, getListData, deleteListData } = useListData('/app-version')
 const showAddDialog = ref(false)
 const showEditDialog = ref(false)
 
@@ -36,7 +36,7 @@ function openEditDialog(data) {
 }
 
 function getNewVersion() {
-	http.get('/app_version/new_version').then(res => {
+	http.get('/app-version/new-version').then(res => {
 		console.log(res.data)
 	})
 }
