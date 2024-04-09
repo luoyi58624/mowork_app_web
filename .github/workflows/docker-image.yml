@@ -22,6 +22,9 @@ jobs:
             git fetch --all
             git reset --hard origin/master
             git pull
+            docker stop $(docker ps -f name=${{ env.NAME }} -q)
+            docker rm $(docker ps -af name=${{ env.NAME }} -q)
+            docker rmi -f $(docker images ${{ env.NAME }} -q)
             docker build -t ${{ env.NAME }} .
             docker run --name=${{ env.NAME }} -d -p 8080:80 ${{ env.NAME }}
 
