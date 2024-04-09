@@ -2,7 +2,7 @@ FROM node:16.18.1
 RUN mkdir -p /app
 WORKDIR /app
 COPY . /app 
-RUN npm install -g pnpm && pnpm i && pnpm run build
+RUN npm i && npm run build
 
 FROM nginx:latest
 COPY --from=0 /app/dist/ /usr/share/nginx/html/

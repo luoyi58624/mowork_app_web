@@ -18,14 +18,12 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           script: |
-            export PATH="$PATH:~/.bun/bin"
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             cd /opt/server/${{ env.NAME }}
             git fetch --all
             git reset --hard origin/master
             git pull
-            bun -v
-            bun i
-            bun run build
             docker build -t ${{ env.NAME }} .
             docker run --name=${{ env.NAME }} -d -p 8080:80 ${{ env.NAME }}
 
