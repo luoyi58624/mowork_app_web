@@ -23,6 +23,9 @@
 					</template>
 				</el-upload>
 			</el-form-item>
+			<el-form-item label="下载地址：">
+				<el-input v-model="formData.downloadUrl" />
+			</el-form-item>
 			<el-form-item label="更新描述：">
 				<el-input v-model="formData.updateDesc" type="textarea" :rows="5" />
 			</el-form-item>
@@ -58,6 +61,7 @@ const formData = reactive({
 	fileSize: null,
 	versionName: '0.0.1',
 	versionCode: 1,
+	downloadUrl: '',
 	updateDesc: ''
 })
 
@@ -111,7 +115,6 @@ async function submitForm(e) {
 			appName: file.value?.name ?? formData.appName,
 			fileSize: file.value?.size ?? formData.fileSize,
 			updateDesc: formData.updateDesc.split('\n'),
-			downloadUrl: e?.data.uploadPath
 		})
 		props.getListData()
 		showMessage('更新成功')

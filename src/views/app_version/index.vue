@@ -10,9 +10,10 @@
 			<el-table-column prop="versionName" label="版本名字" width="100" align="center" />
 			<el-table-column prop="versionCode" label="版本号" width="100" align="center" />
 			<el-table-column prop="downloadUrl" label="下载地址" align="center" min-width="150" />
-			<el-table-column label="操作" width="120" align="center">
+			<el-table-column label="操作" width="150" align="center">
 				<template #default="scoped">
-					<el-button link type="primary" size="small" @click="openEditDialog(scoped.row)">编辑</el-button>
+					<el-button link type="primary" size="small" @click="downloadFile(scoped.row)">下载</el-button>
+					<el-button link type="success" size="small" @click="openEditDialog(scoped.row)">编辑</el-button>
 					<el-button link type="danger" size="small" @click="deleteListData(scoped.row._id)">删除</el-button>
 				</template>
 			</el-table-column>
@@ -30,6 +31,9 @@ const { listData, selectedData, getListData, deleteListData } = useListData('/ap
 const showAddDialog = ref(false)
 const showEditDialog = ref(false)
 
+function downloadFile(data) {
+	window.location.href = data.downloadUrl
+}
 function openEditDialog(data) {
 	selectedData.value = data
 	showEditDialog.value = true
